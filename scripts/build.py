@@ -134,6 +134,20 @@ HOME_FAQS = [
      "We accept selected HMO and dental plans. Contact us with your HMO name so we can confirm your coverage before your visit."),
 ]
 
+# Brand partners — dental brands whose products and materials the clinic uses.
+# [CONFIRM] Keep only brands you actually stock or use, and swap in official logo
+# files (set "logo" to e.g. "images/brands/colgate.svg") once each brand provides one.
+BRANDS = [
+    {"name": "Colgate", "use": "Toothpaste & fluoride care", "logo": None},
+    {"name": "Oral-B", "use": "Toothbrushes & oral hygiene", "logo": None},
+    {"name": "Sensodyne", "use": "Sensitive-teeth care", "logo": None},
+    {"name": "3M", "use": "Braces & filling materials", "logo": None},
+    {"name": "Dentsply Sirona", "use": "Root canal & clinic equipment", "logo": None},
+    {"name": "Ivoclar", "use": "Crowns, veneers & composites", "logo": None},
+    {"name": "GC", "use": "Restorative materials", "logo": None},
+    {"name": "Straumann", "use": "Dental implants", "logo": None},
+]
+
 # Areas served — Iloilo City districts and nearby high-population Metro Iloilo towns.
 LOCATIONS = [
     {
@@ -745,6 +759,11 @@ def page_home():
     cred_html = "".join(f'''<div class="card cred"><div class="card__icon">{icon(i)}</div><div><h3>{t}</h3><p>{escape(d)}</p></div></div>'''
                         for i, t, d in creds)
 
+    brands = "".join(
+        f'''<li class="brand">{f'<img src="{b["logo"]}" alt="{escape(b["name"])} logo" width="160" height="60" loading="lazy">'
+          if b["logo"] else f'<span class="brand__name">{escape(b["name"])}</span>'}
+        <span class="brand__use">{escape(b["use"])}</span></li>''' for b in BRANDS)
+
     testimonials = [
         ("[Patient name], Jaro", "Sample review — replace with a real Google review. Very gentle cleaning and the dentist explained everything clearly."),
         ("[Patient name], Mandurriao", "Sample review — replace with a real Google review. Got my braces here and the monthly adjustments are always on time."),
@@ -831,6 +850,17 @@ def page_home():
         </tbody>
       </table>
     </div>
+  </div>
+</section>
+
+<section class="section" id="brands" aria-labelledby="brands-title">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">Brand Partners</span>
+      <h2 id="brands-title">Trusted Dental Brands We Use</h2>
+      <p>We use genuine, FDA-registered products and materials from established dental brands — for safer treatment and longer-lasting results.</p>
+    </div>
+    <ul class="brands">{brands}</ul>
   </div>
 </section>
 
