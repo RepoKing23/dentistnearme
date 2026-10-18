@@ -24,7 +24,6 @@ Edit these in the `SITE` block in `scripts/build.py`:
 | Item | Where |
 |---|---|
 | Domain (`https://www.dentistpro-iloilo.com`) | `SITE["domain"]` (used in canonicals, the sitemap and structured data) |
-| Email | `SITE["email"]` |
 | Facebook page URL | `SITE["facebook"]` |
 | Clinic hours | `SITE["hours"]` |
 | Exact map coordinates | `SITE["lat"]`, `SITE["lng"]`: right-click your clinic in Google Maps to copy them |
@@ -39,8 +38,10 @@ Search `build.py` for `[` to find the rest:
 Also replace these files in `images/`:
 
 - `case-*-before.svg` and `case-*-after.svg`: real before & after photos, used **only with the patient's written consent**.
-- `hero.svg`, `about.svg`, `dentist-placeholder.svg`: real clinic and dentist photos. Use WebP and keep each under about 200 KB.
+- `dentist-placeholder.svg`: a real photo of your dentist.
 - `og-image.png`: the image shown when the site is shared on social media (1200×630).
+
+The hero, clinic and banner photos are Unsplash stock photos, set in the `PHOTOS` block of `scripts/build.py`. They load straight from Unsplash's image servers, which Unsplash's rules require, and the photographers are credited in the footer. Swap them for real photos of your clinic and team when you have them: real photos build more trust and help local SEO.
 
 ## Appointment form
 

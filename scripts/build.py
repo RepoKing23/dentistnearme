@@ -27,7 +27,7 @@ SITE = {
     "domain": "https://www.dentistpro-iloilo.com",  # [YOUR DOMAIN]
     "phone_display": "0993 495 3526",
     "phone_tel": "+639934953526",
-    "email": "[YOUR-EMAIL]@gmail.com",  # [YOUR EMAIL]
+    "email": "nevelli.work@gmail.com",
     "facebook": "https://www.facebook.com/",  # [YOUR FACEBOOK PAGE URL]
     "street": "Nabitasan",
     "district": "La Paz",
@@ -50,6 +50,44 @@ SITE["address_full"] = f'{SITE["address_line"]}, {SITE["region"]} {SITE["postal"
 MAP_QUERY = quote_plus(f'{SITE["street"]}, {SITE["district"]}, {SITE["city"]}')
 MAP_EMBED = f"https://maps.google.com/maps?q={MAP_QUERY}&z=15&output=embed"
 MAP_LINK = f"https://www.google.com/maps/search/?api=1&query={MAP_QUERY}"
+
+# --------------------------------------------------------------------------
+# Unsplash photos (hotlinked from images.unsplash.com, as Unsplash's API
+# guidelines require; downloads recorded via the Unsplash API). Credited in footer.
+# --------------------------------------------------------------------------
+PHOTOS = {
+    "hero": ("photo-1681939282781-341ac4f61996", "SoyBreno", "soybrenofotografia"),
+    "clinic": ("photo-1629909613654-28e377c37b09", "Benyamin Bohlouli", "benyamin_bohlouli"),
+    "treatment": ("photo-1681939278218-a755fb2bf2d3", "SoyBreno", "soybrenofotografia"),
+    "smile": ("photo-1489278353717-f64c6ee8a4d2", "Lesly Juarez", "jblesly"),
+}
+UTM = "utm_source=dentist_pro&utm_medium=referral"
+
+
+def photo_url(key, w, h=None):
+    crop = f"&h={h}&fit=crop" if h else "&fit=max"
+    return f"https://images.unsplash.com/{PHOTOS[key][0]}?auto=format&q=75&w={w}{crop}"
+
+
+def photo(key, alt, w, h, eager=False):
+    """Responsive <img> for an Unsplash photo cropped to a w:h ratio."""
+    ratio = h / w
+    srcset = ", ".join(f"{photo_url(key, x, round(x * ratio))} {x}w" for x in (480, 800, 1200, 1600))
+    load = 'fetchpriority="high"' if eager else 'loading="lazy"'
+    return (f'<img src="{photo_url(key, w, h)}" srcset="{srcset}" sizes="(min-width: 900px) 520px, 100vw" '
+            f'alt="{escape(alt)}" width="{w}" height="{h}" {load} decoding="async">')
+
+
+def photo_credits():
+    seen, out = set(), []
+    for _, name, user in PHOTOS.values():
+        if user in seen:
+            continue
+        seen.add(user)
+        out.append(f'<a href="https://unsplash.com/@{user}?{UTM}" rel="noopener" target="_blank">{escape(name)}</a>')
+    return (f'Photos by {", ".join(out)} on '
+            f'<a href="https://unsplash.com/?{UTM}" rel="noopener" target="_blank">Unsplash</a>')
+
 
 # --------------------------------------------------------------------------
 # Icons (inline SVG, stroke-based)
@@ -392,6 +430,7 @@ def business_schema(area_served=None):
                        "braces, whitening, veneers, dentures and implants.",
         "url": f'{SITE["domain"]}/',
         "telephone": SITE["phone_tel"],
+        "email": SITE["email"],
         "image": f'{SITE["domain"]}/images/og-image.png',
         "logo": f'{SITE["domain"]}/images/logo.svg',
         "priceRange": "₱₱",
@@ -476,6 +515,7 @@ def head(title, desc, path, prefix, schemas=(), robots="index, follow", keywords
   <link rel="icon" href="{prefix}images/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="{prefix}images/apple-touch-icon.png">
   <link rel="manifest" href="{prefix}site.webmanifest">
+  <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -559,7 +599,7 @@ def footer(prefix):
     </div>
     <div class="footer__bottom">
       <span>© <span class="js-year">{date.today().year}</span> {SITE["name"]}, {SITE["city"]}. All rights reserved.</span>
-      <span>Dentist near me · Dental clinic in La Paz, Iloilo City, Philippines</span>
+      <span>{photo_credits()}</span>
     </div>
   </div>
 </footer>
@@ -673,7 +713,7 @@ def faq_section(faqs, title, prefix_id="faq"):
 
 
 def cta_band(text):
-    return f'''<section class="cta-band">
+    return f'''<section class="cta-band" style="--cta-bg: url('{photo_url("smile", 1600, 700)}')">
   <div class="container">
     <h2>{escape(text)}</h2>
     <p>Call, text or book online — our friendly team in La Paz, Iloilo City is ready to help.</p>
@@ -773,7 +813,7 @@ def page_home():
       </ul>
     </div>
     <div class="hero__art">
-      <img src="images/hero.svg" alt="Friendly dentist at Dentist Pro, a dental clinic near me in La Paz, Iloilo City" width="600" height="520" fetchpriority="high">
+      {photo("hero", "Dentist checking a patient's teeth at Dentist Pro, a dental clinic near me in La Paz, Iloilo City", 1200, 1000, eager=True)}
       <div class="hero__card">{icon("pin")}<span><strong>Nabitasan, La Paz</strong>Minutes from Jaro, Lapuz & City Proper</span></div>
     </div>
   </div>
@@ -836,7 +876,7 @@ def page_home():
 
 <section class="section" id="about" aria-labelledby="about-title">
   <div class="container grid grid--2" style="align-items:center">
-    <div class="about__img"><img src="images/about.svg" alt="Treatment room at Dentist Pro dental clinic in Nabitasan, La Paz, Iloilo City" width="600" height="450" loading="lazy"></div>
+    <div class="about__img">{photo("clinic", "Modern dental treatment room with dental chair and equipment", 1200, 900)}</div>
     <div>
       <span class="eyebrow">About Us</span>
       <h2 id="about-title">A Neighbourhood Dental Clinic in La Paz, Iloilo</h2>
@@ -936,7 +976,7 @@ def page_location(l):
       </ul>
     </div>
     <div class="hero__art">
-      <img src="{prefix}images/hero.svg" alt="Dentist Pro, a dentist near {escape(full)}" width="600" height="520" fetchpriority="high">
+      {photo("treatment", f"Patient receiving dental care at Dentist Pro, a dentist near {full}", 1200, 1000, eager=True)}
       <div class="hero__card">{icon("pin")}<span><strong>{escape(l["time"].capitalize())}</strong>from {escape(l["name"])} to Nabitasan, La Paz</span></div>
     </div>
   </div>
