@@ -24,21 +24,20 @@ Edit these in the `SITE` block in `scripts/build.py`:
 | Item | Where |
 |---|---|
 | Domain (`https://www.dentistpro-iloilo.com`) | `SITE["domain"]` (used in canonicals, the sitemap and structured data) |
-| Facebook page URL | `SITE["facebook"]` |
+| Facebook page URL | `SITE["facebook"]`: the "Follow Us" link only shows once this is set |
 | Clinic hours | `SITE["hours"]` |
 | Exact map coordinates | `SITE["lat"]`, `SITE["lng"]`: right-click your clinic in Google Maps to copy them |
 | Formspree form ID | `SITE["formspree"]` (see below) |
 
-Search `build.py` for `[` to find the rest:
+The site has no placeholder text. These sections were left out on purpose and can be added back to `page_home()` in `build.py` once you have the details:
 
-- `[DENTIST NAME]` and `[PRC NO.]`: in the credentials table and the about-us section.
-- Sample reviews: replace them with real Google reviews.
-- HMO list and certificates.
+- Dentist names and PRC license numbers (in the credentials and about-us sections).
+- Patient reviews: use real Google reviews only.
+- Your list of accepted HMOs and your certificates (in the credential cards).
 
 Also replace these files in `images/`:
 
 - `case-*-before.svg` and `case-*-after.svg`: real before & after photos, used **only with the patient's written consent**.
-- `dentist-placeholder.svg`: a real photo of your dentist.
 - `og-image.png`: the image shown when the site is shared on social media (1200×630).
 
 The hero, clinic and banner photos are Unsplash stock photos, set in the `PHOTOS` block of `scripts/build.py`. They load straight from Unsplash's image servers, which Unsplash's rules require, and the photographers are credited in the footer. Swap them for real photos of your clinic and team when you have them: real photos build more trust and help local SEO.

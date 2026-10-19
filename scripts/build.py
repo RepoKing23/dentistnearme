@@ -28,7 +28,7 @@ SITE = {
     "phone_display": "0993 495 3526",
     "phone_tel": "+639934953526",
     "email": "nevelli.work@gmail.com",
-    "facebook": "https://www.facebook.com/",  # [YOUR FACEBOOK PAGE URL]
+    "facebook": "",  # your Facebook page URL (hidden while empty)
     "street": "Nabitasan",
     "district": "La Paz",
     "city": "Iloilo City",
@@ -446,7 +446,7 @@ def business_schema(area_served=None):
         "hasMap": MAP_LINK,
         "openingHoursSpecification": hours,
         "areaServed": area_served,
-        "sameAs": [SITE["facebook"]],
+        "sameAs": [SITE["facebook"]] if SITE["facebook"] else [],
         "hasOfferCatalog": {
             "@type": "OfferCatalog",
             "name": "Dental Treatments",
@@ -579,6 +579,8 @@ def footer(prefix):
     tl = "".join(f'<li><a href="{prefix}index.html#treatments">{t[0]}</a></li>' for t in TREATMENTS[:6])
     al = "".join(f'<li><a href="{prefix}locations/{l["slug"]}.html">Dentist near {l["name"]}</a></li>' for l in LOCATIONS[:7])
     al2 = "".join(f'<li><a href="{prefix}locations/{l["slug"]}.html">Dentist near {l["name"]}</a></li>' for l in LOCATIONS[7:])
+    social = (f'<h3 class="mt-2">Follow Us</h3><ul><li><a href="{SITE["facebook"]}" rel="noopener" target="_blank">Facebook</a></li></ul>'
+              if SITE["facebook"] else "")
     return f'''<footer class="footer">
   <div class="container">
     <div class="footer__grid">
@@ -593,9 +595,7 @@ def footer(prefix):
       </div>
       <div><h3>Treatments</h3><ul>{tl}</ul></div>
       <div><h3>Iloilo City Districts</h3><ul>{al}</ul></div>
-      <div><h3>Nearby Towns</h3><ul>{al2}</ul>
-        <h3 class="mt-2">Follow Us</h3><ul><li><a href="{SITE["facebook"]}" rel="noopener" target="_blank">Facebook</a></li></ul>
-      </div>
+      <div><h3>Nearby Towns</h3><ul>{al2}</ul>{social}</div>
     </div>
     <div class="footer__bottom">
       <span>© <span class="js-year">{date.today().year}</span> {SITE["name"]}, {SITE["city"]}. All rights reserved.</span>
@@ -778,20 +778,12 @@ def page_home():
         ("award", "PRC-Licensed Dentists", "Every dentist on our team holds a valid Professional Regulation Commission (PRC) license."),
         ("users", "Philippine Dental Association", "Active members of the PDA — Iloilo Chapter, committed to ethical, up-to-date practice."),
         ("shield", "Strict Sterilization", "Autoclave-sterilized instruments, single-use disposables and DOH infection-control protocols."),
-        ("sparkle", "Continuing Education", "Regular trainings in orthodontics, endodontics and cosmetic dentistry. [Add your certificates]"),
-        ("card", "HMO & Flexible Payment", "Selected HMOs accepted. Cash, GCash and installment options for major treatments. [Confirm list]"),
+        ("sparkle", "Continuing Education", "Regular trainings in orthodontics, endodontics and cosmetic dentistry."),
+        ("card", "HMO & Flexible Payment", "Selected HMOs accepted. Cash, GCash and installment options for major treatments."),
         ("heart", "Gentle, Patient-First Care", "Clear explanations, transparent pricing and a calm clinic for anxious patients and kids."),
     ]
     cred_html = "".join(f'''<div class="card cred"><div class="card__icon">{icon(i)}</div><div><h3>{t}</h3><p>{escape(d)}</p></div></div>'''
                         for i, t, d in creds)
-
-    testimonials = [
-        ("[Patient name], Jaro", "Sample review — replace with a real Google review. Very gentle cleaning and the dentist explained everything clearly."),
-        ("[Patient name], Mandurriao", "Sample review — replace with a real Google review. Got my braces here and the monthly adjustments are always on time."),
-        ("[Patient name], La Paz", "Sample review — replace with a real Google review. They took my child's toothache case the same day. Highly recommended!"),
-    ]
-    quotes = "".join(f'''<figure class="quote"><div class="stars" aria-hidden="true">★★★★★</div><blockquote><p>{escape(q)}</p></blockquote><figcaption>— {escape(n)}</figcaption></figure>'''
-                     for n, q in testimonials)
 
     body = f'''<main id="main">
 <section class="hero" aria-labelledby="hero-title">
@@ -849,7 +841,7 @@ def page_home():
       <p>Drag the slider to compare. Results like these are what our Iloilo patients come back to us for.</p>
     </div>
     <div class="grid grid--3">{ba}</div>
-    <p class="disclaimer">Images are illustrations — replace with actual patient photos shared with written consent. Individual results vary.</p>
+    <p class="disclaimer">Illustrations for reference only. Actual results vary from patient to patient.</p>
   </div>
 </section>
 
@@ -861,16 +853,6 @@ def page_home():
       <p>Your health is in qualified hands. Here's why patients across Iloilo trust {SITE["name"]}.</p>
     </div>
     <div class="grid grid--3">{cred_html}</div>
-    <div class="table-wrap">
-      <table class="license-table">
-        <caption class="visually-hidden">Dentist licenses and memberships</caption>
-        <thead><tr><th scope="col">Dentist</th><th scope="col">PRC License No.</th><th scope="col">Specialisation</th><th scope="col">Membership</th></tr></thead>
-        <tbody>
-          <tr><td>Dr. [DENTIST NAME], DMD</td><td>[PRC NO.]</td><td>General & Cosmetic Dentistry</td><td>Philippine Dental Association</td></tr>
-          <tr><td>Dr. [DENTIST NAME], DMD</td><td>[PRC NO.]</td><td>Orthodontics</td><td>Philippine Dental Association</td></tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 </section>
 
@@ -889,18 +871,7 @@ def page_home():
         <li>Family-friendly — from first baby teeth to dentures</li>
         <li>Transparent pricing and installment options</li>
       </ul>
-      <div class="dentist">
-        <img src="images/dentist-placeholder.svg" alt="Dr. [DENTIST NAME], dentist at Dentist Pro Iloilo City" width="80" height="80" loading="lazy">
-        <div><h3>Dr. [DENTIST NAME], DMD</h3><p>Lead Dentist · PRC Lic. No. [PRC NO.]</p></div>
-      </div>
     </div>
-  </div>
-</section>
-
-<section class="section section--soft" id="reviews" aria-labelledby="reviews-title">
-  <div class="container">
-    <div class="section__head"><span class="eyebrow">Patient Stories</span><h2 id="reviews-title">What Our Iloilo Patients Say</h2></div>
-    <div class="grid grid--3">{quotes}</div>
   </div>
 </section>
 

@@ -3,5 +3,4 @@
   <path d="M60 120 Q320 40 580 120 L580 190 Q320 140 60 190z" fill="#d97a7a"/>
   <path d="M40 300 Q320 420 600 300 L600 360 Q320 470 40 360z" fill="#c25b5b"/>
   <rect x="120" y="158" width="60" height="96" rx="22" fill="#f4ecd8" stroke="#d9cfb8" stroke-width="2" transform="rotate(-9 150.0 208)"/><rect x="190" y="144" width="64" height="96" rx="22" fill="#f4ecd8" stroke="#d9cfb8" stroke-width="2" transform="rotate(6 222.0 194)"/><rect x="262" y="160" width="72" height="110" rx="22" fill="#f4ecd8" stroke="#d9cfb8" stroke-width="2" transform="rotate(-5 298.0 210)"/><rect x="338" y="146" width="72" height="110" rx="22" fill="#f4ecd8" stroke="#d9cfb8" stroke-width="2" transform="rotate(8 374.0 196)"/><rect x="410" y="156" width="64" height="96" rx="22" fill="#f4ecd8" stroke="#d9cfb8" stroke-width="2" transform="rotate(-7 442.0 206)"/><rect x="480" y="142" width="60" height="96" rx="22" fill="#f4ecd8" stroke="#d9cfb8" stroke-width="2" transform="rotate(10 510.0 192)"/>
-  <text x="320" y="440" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#7a5a55">Illustration — replace with real patient photo</text>
 </svg>
