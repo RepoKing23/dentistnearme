@@ -28,7 +28,7 @@ SITE = {
     "phone_display": "0993 495 3526",
     "phone_tel": "+639934953526",
     "email": "nevelli.work@gmail.com",
-    "facebook": "",  # your Facebook page URL (hidden while empty)
+    "facebook": "https://www.facebook.com/DentistProIloilo",
     "street": "Nabitasan",
     "district": "La Paz",
     "city": "Iloilo City",

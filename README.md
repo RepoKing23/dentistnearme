@@ -24,7 +24,6 @@ Edit these in the `SITE` block in `scripts/build.py`:
 | Item | Where |
 |---|---|
 | Domain (`https://www.dentistpro-iloilo.com`) | `SITE["domain"]` (used in canonicals, the sitemap and structured data) |
-| Facebook page URL | `SITE["facebook"]`: the "Follow Us" link only shows once this is set |
 | Clinic hours | `SITE["hours"]` |
 | Exact map coordinates | `SITE["lat"]`, `SITE["lng"]`: right-click your clinic in Google Maps to copy them |
 | Formspree form ID | `SITE["formspree"]` (see below) |
