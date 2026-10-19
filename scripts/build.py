@@ -44,6 +44,7 @@ SITE = {
         ("Sunday", "By appointment", [], None, None),
     ],
     "formspree": "https://formspree.io/f/YOUR_FORM_ID",  # [YOUR FORMSPREE ID]
+    "gsc_verification": "DBX-42--Ef-4phAhpHfjiqkU_Yg2GJ9U3ZBUk_phr7Y",  # Google Search Console
 }
 SITE["address_line"] = f'{SITE["street"]}, {SITE["district"]}, {SITE["city"]}'
 SITE["address_full"] = f'{SITE["address_line"]}, {SITE["region"]} {SITE["postal"]}, Philippines'
@@ -512,6 +513,7 @@ def head(title, desc, path, prefix, schemas=(), robots="index, follow", keywords
   <meta name="twitter:description" content="{escape(desc)}">
   <meta name="twitter:image" content="{SITE["domain"]}/images/og-image.png">
   <meta name="theme-color" content="#0e7c86">
+  <meta name="google-site-verification" content="{SITE["gsc_verification"]}">
   <link rel="icon" href="{prefix}images/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="{prefix}images/apple-touch-icon.png">
   <link rel="manifest" href="{prefix}site.webmanifest">
