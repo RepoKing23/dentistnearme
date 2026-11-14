@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SITE = {
     "name": "Dentist Pro",
     "tagline": "Dental Clinic · Iloilo City",
-    "domain": "https://www.dentistpro-iloilo.com",  # [YOUR DOMAIN]
+    "domain": "https://www.yournearestdentist.site",
     "phone_display": "0993 495 3526",
     "phone_tel": "+639934953526",
     "email": "nevelli.work@gmail.com",

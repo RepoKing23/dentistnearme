@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.dentistpro-iloilo.com/sitemap.xml
+Sitemap: https://www.yournearestdentist.site/sitemap.xml
